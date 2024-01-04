@@ -50,8 +50,8 @@ namespace BulkyWeb.Controllers
                 return NotFound();
             }
             Category categoryFromDb = _db.Categories.Find(id); //can only find using id
-            Category categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id); //can only find using any attribute
-            Category categoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault(); //another method
+           // Category categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id); //can only find using any attribute
+           // Category categoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault(); //another method
             
             if (categoryFromDb == null) {
                 return NotFound();
@@ -80,6 +80,34 @@ namespace BulkyWeb.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category categoryFromDb = _db.Categories.Find(id); //can only find using id
+            //Category categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id); //can only find using any attribute
+           // Category categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault(); //another method
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? obj = _db.Categories.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 
