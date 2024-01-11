@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bulky.Models
 {
-    internal class Product
+    public class Product
     {
         [Key]
         public int Id {  get; set; }
